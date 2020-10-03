@@ -7,8 +7,10 @@ import (
 )
 
 func main() {
-	list := tape.Read("var a = 1 + 2;")
-	for _, b := range list {
+	input := "var a = 1 + 2;"
+	fmt.Println("「" + input + "」から一文字ずつばらす")
+	stack := tape.Read(input)
+	for _, b := range stack {
 		fmt.Println(string(b))
 	}
 }

@@ -1,7 +1,8 @@
 package tape
 
-// 取得した文字を格納する配列の容量
-const capacity = 20
+import (
+	"../stack"
+)
 
 // 指定の文字列を1文字ずつ読む為のテープ
 type Tape struct {
@@ -12,17 +13,15 @@ type Tape struct {
 
 // 位置文字ずつ取り出し、byteの配列に格納する
 func Read(input string) []byte {
-	list := make([]byte, capacity)
+	s := stack.New()
 
 	tape := new(input)
-	i := 0
 	for {
 		//最初にスペース等を除く @ToDo 課題にする
 		tape.skip()
 
-		list[i] = tape.ch
+		s.Add(tape.ch)
 
-		i++
 		// テープを最後まで読み進めるとchは0になるので、0でテープの読み込みを終了する
 		if tape.ch == 0 {
 			break
@@ -30,7 +29,7 @@ func Read(input string) []byte {
 		tape.readChar()
 	}
 
-	return list
+	return s.Stack
 }
 
 // Tape構造体に文字列をセットし、一文字目を読み始める
