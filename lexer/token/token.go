@@ -8,5 +8,13 @@ type Token struct {
 
 const (
 	//
-	EOF = iota
+	EOF     = iota
+	ILLEGAL //わからないものはすべてこれ
+
+	//演算子
+	ASSIGN //=
+	PLUS   //+
+
+	//キーワード
+	VAR //var
 )
