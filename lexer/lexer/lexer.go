@@ -25,10 +25,22 @@ func Divide(input string) []token.Token {
 		case '=':
 			tok = newToken(token.ASSIGN, []byte("="))
 			break
+		case '+':
+			tok = newToken(token.PLUS, []byte("+"))
+			break
 		case '0':
 			tok = newToken(token.EOF, []byte(""))
 		default: //複数のbyteになりそうなもの var or 変数名 or 数字
-			tok = newToken(token.ILLEGAL, []byte(""))
+			if isLetter(lexer.ch) {
+				literal := lexer.readIdentifier()
+				tokenType := token.LookupIdent(literal)
+				tok = newToken(tokenType, []byte(literal))
+			} else if isDigit(lexer.ch) {
+				literal := lexer.readNumber()
+				tok = newToken(token.INT, []byte(literal))
+			} else {
+				tok = newToken(token.ILLEGAL, []byte(""))
+			}
 		}
 
 		//fmt.Println(lexer.ch)
@@ -58,14 +70,37 @@ func newToken(tokenType int, ch []byte) token.Token {
 // テープを一文字分進める
 func (l *Lexer) readChar() {
 	//文字列を最後まで読み込んだ
-	if l.current >= len(l.input) {
+	if l.next >= len(l.input) {
 		l.ch = 0
-		l.current = 0
-		return
+	} else {
+		l.ch = l.input[l.next]
 	}
+	l.current = l.next
+	l.next++
+}
 
-	l.ch = l.input[l.current]
-	l.current++
+func (l *Lexer) readIdentifier() string {
+	pos := l.current
+	for isLetter(l.ch) {
+		l.readChar()
+	}
+	return l.input[pos:l.current]
+}
+
+func isLetter(ch byte) bool {
+	return (('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') || ch == '_')
+}
+
+func (l *Lexer) readNumber() string {
+	pos := l.current
+	for isDigit(l.ch) {
+		l.readChar()
+	}
+	return l.input[pos:l.current]
+}
+
+func isDigit(ch byte) bool {
+	return '0' <= ch && ch <= '9'
 }
 
 func (l *Lexer) skip() {

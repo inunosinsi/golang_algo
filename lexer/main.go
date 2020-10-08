@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	input := "var a = 1 + 2;"
+	input := "var a = 15 + 23;"
 	fmt.Println("「" + input + "」からトークンにばらす")
 	stack := lexer.Divide(input)
 	for _, token := range stack {
