@@ -24,10 +24,10 @@ func Divide(input string) []token.Token {
 		switch lexer.ch {
 		case '=':
 			tok = newToken(token.ASSIGN, []byte("="))
-			break
 		case '+':
 			tok = newToken(token.PLUS, []byte("+"))
-			break
+		case ';':
+			tok = newToken(token.SEMICOLON, []byte(";"))
 		case '0':
 			tok = newToken(token.EOF, []byte(""))
 		default: //複数のbyteになりそうなもの var or 変数名 or 数字

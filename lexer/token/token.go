@@ -19,6 +19,8 @@ const (
 	ASSIGN //=
 	PLUS   //+
 
+	SEMICOLON //;
+
 	//キーワード
 	FNC
 	VAR //var
