@@ -14,5 +14,5 @@ func main() {
 		t.Add(i)
 	}
 
-	t.Show()
+	t.PrintTree()
 }
