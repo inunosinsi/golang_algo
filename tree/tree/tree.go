@@ -36,7 +36,6 @@ func (node *Node) Add(v int) {
 }
 
 func (node *Node) Show() {
-	//treeの高さを調べる
 	h := MeasureHeight(node)
 	fmt.Println(h)
 
@@ -44,7 +43,7 @@ func (node *Node) Show() {
 
 }
 
-//木の高さを調べる
+// Measure the height of a tree
 func MeasureHeight(node *Node) int {
 	if node.Left == nil && node.Right == nil {
 		return 1
