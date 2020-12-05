@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-// Measure the height of a tree
-func TestMeasureHeight(t *testing.T) {
+// Measure the depth of a tree
+func TestMeasureDepth(t *testing.T) {
 	tests := []struct {
 		values []int
 		height int
@@ -26,7 +26,7 @@ func TestMeasureHeight(t *testing.T) {
 			}
 			tr.Add(i)
 		}
-		if tt.height != MeasureHeight(tr) {
+		if tt.height != MeasureDepth(tr) {
 			t.Fatalf("failed")
 		}
 	}

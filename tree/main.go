@@ -5,13 +5,14 @@ import (
 )
 
 func main() {
-	t := tree.New(9)
-	t.Add(4)
-	t.Add(15)
-	t.Add(2)
-	t.Add(6)
-	t.Add(12)
-	t.Add(17)
+	values := []int{9, 4, 15, 2, 6, 12, 17, 3, 1, 7, 5, 8, 11, 13, 14, 16}
+	t := tree.New(values[0])
+	for idx, i := range values {
+		if idx == 0 {
+			continue
+		}
+		t.Add(i)
+	}
 
 	t.Show()
 }
