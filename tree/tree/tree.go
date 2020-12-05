@@ -59,3 +59,11 @@ func MeasureDepth(node *Node) int {
 		return 1 + rightHeight
 	}
 }
+
+func MeasureWidth(depth int) int {
+	w := 1
+	for i := 0; i < depth; i++ {
+		w *= 2
+	}
+	return w
+}
