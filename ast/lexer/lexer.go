@@ -17,7 +17,7 @@ func Divide(input string) []token.Token {
 	var tok token.Token
 	s := stack.New()
 
-	lexer := new(input)
+	lexer := New(input)
 	for {
 		lexer.skip()
 
@@ -56,8 +56,39 @@ func Divide(input string) []token.Token {
 	return s.Stack
 }
 
+func (l *Lexer) NextToken() token.Token {
+	var tok token.Token
+
+	l.skip()
+
+	switch l.ch {
+	case '+':
+		tok = newToken(token.PLUS, []byte{l.ch})
+	case ';':
+		tok = newToken(token.SEMICOLON, []byte{l.ch})
+	case 0:
+		tok.Literal = []byte("")
+		tok.TokenType = token.EOF
+	default:
+		if isLetter(l.ch) {
+			tok.Literal = []byte(l.readIdentifier())
+			tok.TokenType = token.LookupIdent(string(tok.Literal))
+			return tok
+		} else if isDigit(l.ch) {
+			tok.TokenType = token.INT
+			tok.Literal = []byte(l.readNumber())
+			return tok
+		} else {
+			tok = newToken(token.ILLEGAL, []byte{l.ch})
+		}
+	}
+
+	l.readChar()
+	return tok
+}
+
 // Tape構造体に文字列をセットし、一文字目を読み始める
-func new(input string) *Lexer {
+func New(input string) *Lexer {
 	l := &Lexer{input: input}
 	l.readChar()
 	return l
@@ -112,5 +143,13 @@ func (l *Lexer) skip() {
 		} else {
 			break
 		}
+	}
+}
+
+func (l *Lexer) peekChar() byte {
+	if l.current >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.current]
 	}
 }

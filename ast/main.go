@@ -1,18 +1,13 @@
 package main
 
 import (
-	"fmt"
-
 	"./lexer"
+	"./parser"
 )
 
 func main() {
 	input := "15 + 23;"
-	stack := lexer.Divide(input)
-	// for _, token := range stack {
-	// 	fmt.Println(string(token.Literal))
-	// }
-
-	fmt.Println(stack)
-	//stackからastを作る
+	l := lexer.New(input)
+	p := parser.New(l) //lexerをparserの中に組み込む
+	p.Parse()
 }
