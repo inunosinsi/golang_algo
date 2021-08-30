@@ -7,22 +7,16 @@ package tree
 
 import "strconv"
 
-type TreeToStringFunc func(*Node) string
-
 // Prints the given binary tree
 func (node *Node) PrintTree() {
-	printNodeWithPrinter(node, defaultTreeToStringFunc())
+	printNodeWithPrinter(node)
 }
 
-func defaultTreeToStringFunc() TreeToStringFunc {
-	return func(node *Node) string { return strconv.Itoa(node.Value) }
+func printNodeWithPrinter(node *Node) {
+	printNodeInternal([]*Node{node}, 1, maxLevel(node), digits(maxValue(node))/2-1)
 }
 
-func printNodeWithPrinter(node *Node, treeToString TreeToStringFunc) {
-	printNodeInternal([]*Node{node}, 1, maxLevel(node), digits(maxValue(node))/2-1, treeToString)
-}
-
-func printNodeInternal(nodes []*Node, level int, maxLevel int, floorElev int, treeToString TreeToStringFunc) {
+func printNodeInternal(nodes []*Node, level int, maxLevel int, floorElev int) {
 	if len(nodes) == 0 || isElementsNull(nodes) {
 		return
 	}
@@ -40,7 +34,7 @@ func printNodeInternal(nodes []*Node, level int, maxLevel int, floorElev int, tr
 		var digits int
 		if node != nil {
 			relativeLeft, relativeRight = node.Left, node.Right
-			value = treeToString(node)
+			value = strconv.Itoa(node.Value)
 		} else {
 			relativeLeft, relativeRight = nil, nil
 			value = " "
@@ -82,7 +76,7 @@ func printNodeInternal(nodes []*Node, level int, maxLevel int, floorElev int, tr
 		}
 		println("")
 	}
-	printNodeInternal(newNodes, level+1, maxLevel, floorElev, treeToString)
+	printNodeInternal(newNodes, level+1, maxLevel, floorElev)
 }
 
 func getPrintTreeBranchFunc(printLeft func(int), printCenter func(int), printRight func(int),

@@ -122,3 +122,17 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 	//
 	// return leftExp
 }
+
+func (p *Parser) peekTokenIs(tokenType int) bool {
+	return p.peekToken.TokenType == tokenType
+}
+
+//優先順位を調べる
+func (p *Parser) peekPrecedence() int {
+	//各トークンに設けられている優先順位を取得
+	if p, ok := precedences[p.peekToken.TokenType]; ok {
+		return p
+	}
+	//指定のトークンに優先順位が設けられていなければ、最低の値を返す
+	return LOWEST
+}
