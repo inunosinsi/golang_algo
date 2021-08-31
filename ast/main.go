@@ -8,11 +8,12 @@ import (
 )
 
 func main() {
-	input := "15 + 23;"
+	input := "15 + 40 + 50;"
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()
-	fmt.Println(program)
+	fmt.Println(program.String())
 
 	//正しい場合のコードを追加する
+
 }

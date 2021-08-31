@@ -8,8 +8,11 @@ import "../token"
 
 type Identifier struct {
 	Token token.Token
-	Value string
+	Value []byte
 }
 
 func (i *Identifier) expressionNode()      {}
 func (i *Identifier) TokenLiteral() string { return string(i.Token.Literal) }
+
+//検証用
+func (i *Identifier) String() string { return string(i.Value) }

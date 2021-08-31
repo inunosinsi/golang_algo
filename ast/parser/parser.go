@@ -6,12 +6,21 @@ import (
 	"../token"
 )
 
+type (
+	prefixParseFn func() ast.Expression
+	infixParseFn  func(ast.Expression) ast.Expression
+)
+
 type Parser struct {
 	l *lexer.Lexer
 	/**errors []string エラーメッセージは一旦保留 **/
 
 	curToken  token.Token
 	peekToken token.Token
+
+	//map[int]...のintにTokenTypeを指定する
+	prefixParseFns map[int]prefixParseFn
+	infixParseFns  map[int]infixParseFn
 }
 
 func New(l *lexer.Lexer) *Parser {
@@ -20,16 +29,24 @@ func New(l *lexer.Lexer) *Parser {
 		/**errors: []string{}, //エラーはなしにする**/
 	}
 
+	/** @register func **/
+	//各parse系のメソッドを事前に登録しておく→parseExpressionで使う
+	p.prefixParseFns = make(map[int]prefixParseFn)
+	p.registerPrefix(token.INT, p.parseIntegerLiteral)
+
+	p.infixParseFns = make(map[int]infixParseFn)
+	p.registerInfix(token.PLUS, p.parseInfixExpression)
+
+	//処理 tokenを二回進めることで、curTokenに最初のトークン、peekTokenに２つ目のトークンが格納される
+	p.nextToken()
+	p.nextToken()
+
 	return p
 }
 
 func (p *Parser) Parse() *ast.Program {
 	program := &ast.Program{}
 	program.Statements = []ast.Statement{}
-
-	//処理 tokenを二回進めることで、curTokenに最初のトークン、peekTokenに２つ目のトークンが格納される
-	p.nextToken()
-	p.nextToken()
 
 	//再帰下降構文解析 EOFのトークンになるまでトークンの読み込みを繰り返す
 	for p.curToken.TokenType != token.EOF {
@@ -41,6 +58,14 @@ func (p *Parser) Parse() *ast.Program {
 	}
 
 	return program
+}
+
+func (p *Parser) registerPrefix(tokenType int, fn prefixParseFn) {
+	p.prefixParseFns[tokenType] = fn
+}
+
+func (p *Parser) registerInfix(tokenType int, fn infixParseFn) {
+	p.infixParseFns[tokenType] = fn
 }
 
 func (p *Parser) nextToken() {
@@ -68,16 +93,21 @@ func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 
 // 優先順位に従い、再帰を実行し続け、Expressionを完成させる
 func (p *Parser) parseExpression(precedence int) ast.Expression {
-	// 下の行が重要
+	//@register funcで登録したメソッドを呼び出す
+	prefix := p.prefixParseFns[p.curToken.TokenType]
+	leftExp := prefix()
+
+	//再帰下降構文解析の要　@register funcで登録したメソッドを呼び出す
 	for !p.peekTokenIs(token.SEMICOLON) && precedence < p.peekPrecedence() {
-		switch p.curToken.TokenType {
-		case token.INT:
-			leftExp := p.parseIntegerLiteral()
-			p.nextToken()
-			//整数リテラルの後は必ず演算子がくる
-			leftExp = p.parseInfixExpression(leftExp)
+		infix := p.infixParseFns[p.peekToken.TokenType]
+		if infix == nil {
 			return leftExp
 		}
+
+		p.nextToken()
+
+		leftExp = infix(leftExp)
 	}
-	return nil
+
+	return leftExp
 }

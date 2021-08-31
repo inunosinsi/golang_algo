@@ -7,7 +7,11 @@ package ast
  *   /   \
  *  2     3
  */
-import "../token"
+import (
+	"bytes"
+
+	"../token"
+)
 
 type InfixExpression struct {
 	Token    token.Token
@@ -18,3 +22,15 @@ type InfixExpression struct {
 
 func (oe *InfixExpression) expressionNode()      {}
 func (oe *InfixExpression) TokenLiteral() string { return string(oe.Token.Literal) }
+
+func (oe *InfixExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("(")
+	out.WriteString(oe.Left.String())
+	out.WriteString(" " + string(oe.Operator) + " ")
+	out.WriteString(oe.Right.String())
+	out.WriteString(")")
+
+	return out.String()
+}
