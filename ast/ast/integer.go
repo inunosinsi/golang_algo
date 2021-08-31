@@ -7,7 +7,7 @@ import "../token"
 
 type IntegerLiteral struct {
 	Token token.Token
-	Value int64
+	Value []byte
 }
 
 func (il *IntegerLiteral) expressionNode()      {}

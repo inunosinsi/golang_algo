@@ -1,11 +1,18 @@
 package ast
 
+/**
+ * 2 + 3の場合、下記の木構造にする
+ *     +
+ *    / \
+ *   /   \
+ *  2     3
+ */
 import "../token"
 
 type InfixExpression struct {
 	Token    token.Token
 	Left     Expression
-	Operator string
+	Operator []byte
 	Right    Expression
 }
 
