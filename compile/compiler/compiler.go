@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"../ast"
+	"../code"
 )
 
 /**
@@ -44,6 +45,37 @@ func (c *Compiler) Compile(node ast.Node) error {
 		if err != nil {
 			return err
 		}
+	case *ast.IntegerLiteral:
+		c.emit(code.PUSH, node.Value)
+	case *ast.InfixExpression:
+		err := c.Compile(node.Left)
+		if err != nil {
+			return err
+		}
+
+		err = c.Compile(node.Right)
+		if err != nil {
+			return err
+		}
+
+		switch string(node.Operator) {
+		case "+":
+			c.emit(code.ADD)
+			return nil
+		}
 	}
+
 	return nil
+}
+
+func (c *Compiler) emit(mnemonic int, operands ...[]byte) {
+	op := Opcode{
+		Mnemonic: mnemonic,
+	}
+
+	if len(operands) > 0 {
+		op.Operand = operands[0]
+	}
+
+	c.Opcodes = append(c.Opcodes, op)
 }
