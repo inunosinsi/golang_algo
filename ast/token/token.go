@@ -19,6 +19,7 @@ const (
 	ASSIGN //=
 	PLUS   //+
 
+	ASTERISK  //*
 	SEMICOLON //;
 
 	//キーワード
