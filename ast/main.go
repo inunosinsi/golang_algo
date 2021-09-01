@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	input := "15 + 40 * 2;"
+	input := "var a = 15 + 40;"
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()

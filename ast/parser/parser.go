@@ -32,6 +32,7 @@ func New(l *lexer.Lexer) *Parser {
 	/** @register func **/
 	//各parse系のメソッドを事前に登録しておく→parseExpressionで使う
 	p.prefixParseFns = make(map[int]prefixParseFn)
+	p.registerPrefix(token.IDENT, p.parseIdentifier)
 	p.registerPrefix(token.INT, p.parseIntegerLiteral)
 
 	p.infixParseFns = make(map[int]infixParseFn)
@@ -76,6 +77,8 @@ func (p *Parser) nextToken() {
 
 func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.TokenType {
+	case token.VAR:
+		return p.parseVarStatement()
 	default:
 		return p.parseExpressionStatement()
 	}
