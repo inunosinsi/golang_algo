@@ -15,7 +15,9 @@ type Parser struct {
 	l *lexer.Lexer
 	/**errors []string エラーメッセージは一旦保留 **/
 
-	curToken  token.Token
+	// 構文解析器に組み込んだ字句解析器が現在読み込んでいるトークン
+	curToken token.Token
+	// 構文解析器に組み込んだ字句解析器が先読みしているトークン
 	peekToken token.Token
 
 	//map[int]...のintにTokenTypeを指定する
@@ -37,7 +39,6 @@ func New(l *lexer.Lexer) *Parser {
 
 	p.infixParseFns = make(map[int]infixParseFn)
 	p.registerInfix(token.PLUS, p.parseInfixExpression)
-	p.registerInfix(token.ASTERISK, p.parseInfixExpression)
 
 	//処理 tokenを二回進めることで、curTokenに最初のトークン、peekTokenに２つ目のトークンが格納される
 	p.nextToken()
@@ -60,19 +61,6 @@ func (p *Parser) Parse() *ast.Program {
 	}
 
 	return program
-}
-
-func (p *Parser) registerPrefix(tokenType int, fn prefixParseFn) {
-	p.prefixParseFns[tokenType] = fn
-}
-
-func (p *Parser) registerInfix(tokenType int, fn infixParseFn) {
-	p.infixParseFns[tokenType] = fn
-}
-
-func (p *Parser) nextToken() {
-	p.curToken = p.peekToken
-	p.peekToken = p.l.NextToken()
 }
 
 func (p *Parser) parseStatement() ast.Statement {

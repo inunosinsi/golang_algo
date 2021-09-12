@@ -8,12 +8,11 @@ import (
 )
 
 func main() {
-	input := "var a = 15 + 40;"
+	input := "15 + 40;"
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()
+
+	//抽象構文木が正しくできれば出力される
 	fmt.Println(program.String())
-
-	//正しい場合のコードを追加する
-
 }
