@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"./tree"
 )
 
@@ -14,5 +16,8 @@ func main() {
 		bt.Add(i)
 	}
 
-	bt.PrintTree()
+	s := tree.Size(bt)
+	fmt.Println(s)
+
+	//bt.PrintTree()
 }

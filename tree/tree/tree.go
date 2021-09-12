@@ -33,6 +33,14 @@ func (node *Node) Add(v int) {
 	}
 }
 
+// 再帰的に二分木の要素数を取得する
+func Size(node *Node) int {
+	if node == nil {
+		return 0
+	}
+	return 1 + Size(node.Left) + Size(node.Right)
+}
+
 // Measure the height of a tree
 func MeasureDepth(node *Node) int {
 	if node.Left == nil && node.Right == nil {
