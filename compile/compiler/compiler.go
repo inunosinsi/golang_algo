@@ -63,6 +63,12 @@ func (c *Compiler) Compile(node ast.Node) error {
 			c.emit(code.ADD)
 			return nil
 		}
+	case *ast.VarStatement:
+		err := c.Compile(node.Value)
+		if err != nil {
+			return err
+		}
+		c.emit(code.ASSIGN, node.Name.Value)
 	}
 
 	return nil
