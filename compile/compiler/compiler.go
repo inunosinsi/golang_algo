@@ -69,6 +69,12 @@ func (c *Compiler) Compile(node ast.Node) error {
 			return err
 		}
 		c.emit(code.ASSIGN, node.Name.Value)
+	case *ast.EchoStatement:
+		err := c.Compile(node.Value)
+		if err != nil {
+			return err
+		}
+		c.emit(code.POP)
 	}
 
 	return nil

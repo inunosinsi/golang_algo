@@ -142,7 +142,7 @@ func isDigit(ch byte) bool {
 func (l *Lexer) skip() {
 	// 'a'←シングルクオートで文字列を囲うと、byte値が得られます
 	for {
-		if l.ch == ' ' || l.ch == '\t' {
+		if l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 			// 現在読み込んでいる文字がスペース等だった場合は一文字読み進める
 			l.readChar()
 		} else {

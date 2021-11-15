@@ -77,6 +77,8 @@ func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.TokenType {
 	case token.VAR:
 		return p.parseVarStatement()
+	case token.ECHO:
+		return p.parseEchoStatement()
 	default:
 		return p.parseExpressionStatement()
 	}

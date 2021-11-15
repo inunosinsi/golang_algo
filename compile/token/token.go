@@ -25,11 +25,13 @@ const (
 	//キーワード
 	FNC
 	VAR //var
+	ECHO
 )
 
 var keywords = map[string]int{
 	"function": FNC,
 	"var":      VAR,
+	"echo":     ECHO,
 }
 
 func LookupIdent(ident string) int {
