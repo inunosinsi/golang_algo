@@ -63,6 +63,8 @@ func (l *Lexer) NextToken() token.Token {
 	l.skip()
 
 	switch l.ch {
+	case '=':
+		tok = newToken(token.ASSIGN, []byte{l.ch})
 	case '+':
 		tok = newToken(token.PLUS, []byte{l.ch})
 	case '*':
