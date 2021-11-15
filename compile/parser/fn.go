@@ -22,6 +22,7 @@ func (p *Parser) peekPrecedence() int {
 	return LOWEST
 }
 
+//先行読み込みしているトークンが予想した(引数のt)の型であるか？
 func (p *Parser) expectPeek(t int) bool {
 	if p.peekTokenIs(t) {
 		p.nextToken()
