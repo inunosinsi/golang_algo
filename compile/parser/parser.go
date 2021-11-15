@@ -75,6 +75,8 @@ func (p *Parser) nextToken() {
 
 func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.TokenType {
+	case token.VAR:
+		return p.parseVarStatement()
 	default:
 		return p.parseExpressionStatement()
 	}
