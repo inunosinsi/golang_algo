@@ -12,7 +12,7 @@ import (
 func main() {
 	//input := "echo 1;"
 	input := `var a = 1 + 2;
-	echo 1;`
+	echo a;`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()
