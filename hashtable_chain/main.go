@@ -14,4 +14,8 @@ func main() {
 
 	result := table.Search(t, "hensu2")
 	fmt.Println(result)
+
+	//衝突したハッシュ値の場合にどちらの検索ワードでも値にたどり着けるか？
+	result = table.Search(t, "hensu3")
+	fmt.Println(result)
 }

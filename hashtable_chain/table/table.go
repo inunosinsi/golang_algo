@@ -1,8 +1,6 @@
 package table
 
 import (
-	"fmt"
-
 	"../hash"
 	"../node"
 )
@@ -13,9 +11,25 @@ func New() []*node.Node {
 
 func Add(t []*node.Node, ident string, value string) []*node.Node {
 	h := hash.MakeHashValue(ident)
-	//newNode := node.New(ident, value)
+	newNode := node.New(ident, value)
 	n := t[h]
-	fmt.Println(n.Ident)
+
+	// nがnilの場合はtableにそのまま加える
+	if n == nil {
+		t[h] = newNode
+		return t
+	}
+
+	//ハッシュ値の箇所に既に値がある場合はNodeをNextに数珠つなぎする
+	if len(n.Ident) > 0 {
+		for {
+			if n.Next == nil {
+				n.Next = newNode
+				break
+			}
+			n = n.Next
+		}
+	}
 	return t
 }
 
@@ -26,8 +40,14 @@ func Search(t []*node.Node, ident string) string {
 	n := t[h]
 
 	// 念の為に変数名が正しいか？を確認
-	if n.Ident == ident {
-		return n.Value
+	for {
+		if n.Ident == ident {
+			return n.Value
+		}
+		if n.Next == nil {
+			break
+		}
+		n = n.Next
 	}
 
 	return "nil"
