@@ -21,3 +21,17 @@ func (p *Parser) peekPrecedence() int {
 	//指定のトークンに優先順位が設けられていなければ、最低の値を返す
 	return LOWEST
 }
+
+func (p *Parser) expectPeek(t int) bool {
+	if p.peekTokenIs(t) {
+		p.nextToken()
+		return true
+	} else {
+		p.peekError(t)
+		return false
+	}
+}
+
+func (p *Parser) peekError(t int) {
+	//いずれエラーメッセージを出力したい
+}
