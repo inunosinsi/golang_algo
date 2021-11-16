@@ -43,7 +43,7 @@ POP`,
 
 	for _, tt := range tests {
 		lines := generate(tt.input)
-		exp := exeTrim(tt.expectedIntermediateCode)
+		exp := trimString(tt.expectedIntermediateCode)
 
 		if lines != exp {
 			t.Errorf("compiler error : \"" + tt.input + "\"")
@@ -64,13 +64,13 @@ func generate(ipt string) string {
 		for _, opcode := range c.Opcodes {
 			m := code.GetCode(opcode.Mnemonic)
 			o := string(opcode.Operand)
-			lines += exeTrim(m+" "+o) + "\n"
+			lines += trimString(m+" "+o) + "\n"
 		}
 	}
-	return exeTrim(lines)
+	return trimString(lines)
 }
 
-func exeTrim(lines string) string {
+func trimString(lines string) string {
 	lines = strings.Trim(lines, "\n")
 	lines = strings.Trim(lines, " ")
 	return lines
