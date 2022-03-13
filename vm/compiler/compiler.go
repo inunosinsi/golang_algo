@@ -62,6 +62,9 @@ func (c *Compiler) Compile(node ast.Node) error {
 		case "+":
 			c.emit(code.ADD)
 			return nil
+		case "*":
+			c.emit(code.MUL)
+			return nil
 		}
 	case *ast.VarStatement:
 		err := c.Compile(node.Value)

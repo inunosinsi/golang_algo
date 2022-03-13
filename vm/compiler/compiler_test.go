@@ -54,6 +54,54 @@ ASSIGN a
 PUSH a
 POP`,
 		},
+		{
+			input: `var a = 1 + 2 * 3;
+echo a;`,
+			expectedIntermediateCode: `PUSH 1
+PUSH 2
+PUSH 3
+MUL
+ADD
+ASSIGN a
+PUSH a
+POP`,
+		},
+		{
+			input: `var a = 1 * 2 + 3;
+echo a;`,
+			expectedIntermediateCode: `PUSH 1
+PUSH 2
+MUL
+PUSH 3
+ADD
+ASSIGN a
+PUSH a
+POP`,
+		},
+		{
+			input: `var a = (1 + 2) * 3;
+echo a;`,
+			expectedIntermediateCode: `PUSH 1
+PUSH 2
+ADD
+PUSH 3
+MUL
+ASSIGN a
+PUSH a
+POP`,
+		},
+		{
+			input: `var a = 1 * (2 + 3);
+echo a;`,
+			expectedIntermediateCode: `PUSH 1
+PUSH 2
+PUSH 3
+ADD
+MUL
+ASSIGN a
+PUSH a
+POP`,
+		},
 	}
 
 	for _, tt := range tests {
