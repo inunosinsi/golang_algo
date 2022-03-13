@@ -10,9 +10,9 @@ func (p *Parser) parseIdentifier() ast.Expression {
 	return &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 }
 
-func (p *Parser) parseIdentStatement() *ast.ExpressionStatement {
+func (p *Parser) parseIdentStatement() *ast.IdentStatement {
 	//変数を定義する
-	stmt := &ast.ExpressionStatement{Token: p.curToken}
+	stmt := &ast.IdentStatement{Token: p.curToken, Value: p.curToken.Literal}
 
 	//変数の次に = がきているか？
 	if !p.expectPeek(token.ASSIGN) {

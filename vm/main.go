@@ -10,8 +10,7 @@ import (
 )
 
 func main() {
-	//input := "echo 1;"
-	input := `var a = 1 + 2;
+	input := `var a = 2 + 1;
 	a = a + 1;
 	echo a;`
 	l := lexer.New(input)
@@ -26,4 +25,7 @@ func main() {
 			fmt.Printf("%s %s\n", code.GetCode(opcode.Mnemonic), string(opcode.Operand))
 		}
 	}
+
+	// result := vm.Eval(c.Opcodes)
+	// fmt.Println(result)
 }
