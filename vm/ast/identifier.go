@@ -36,8 +36,7 @@ func (id *IdentStatement) TokenLiteral() string { return string(id.Token.Literal
 func (id *IdentStatement) String() string {
 	var out bytes.Buffer
 
-	out.WriteString(id.TokenLiteral() + " ")
-	out.WriteString(string(id.Value))
+	out.WriteString(id.TokenLiteral())
 	out.WriteString(" = ")
 
 	if id.Expression != nil {
