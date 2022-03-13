@@ -22,6 +22,9 @@ const (
 
 	SEMICOLON //;
 
+	LPAREN //(
+	RPAREN //)
+
 	//キーワード
 	FNC
 	VAR //var
