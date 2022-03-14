@@ -34,7 +34,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.prefixParseFns = make(map[int]prefixParseFn)
 	p.registerPrefix(token.INT, p.parseIntegerLiteral)
 	p.registerPrefix(token.IDENT, p.parseIdentifier)
-	p.registerPrefix(token.LPAREN, p.parseGroupedExpression)
+	p.registerPrefix(token.LPAREN, p.parseParenExpression)
 
 	p.infixParseFns = make(map[int]infixParseFn)
 	p.registerInfix(token.PLUS, p.parseInfixExpression)

@@ -5,7 +5,7 @@ import (
 	"../token"
 )
 
-func (p *Parser) parseGroupedExpression() ast.Expression {
+func (p *Parser) parseParenExpression() ast.Expression {
 	p.nextToken()
 
 	exp := p.parseExpression(LOWEST)
