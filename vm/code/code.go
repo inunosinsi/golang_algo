@@ -7,6 +7,8 @@ const (
 	ADD
 	MUL
 	ASSIGN //スタックのトップの値をポップし、指定の変数へ書き込む
+	LTOP   //<
+	GTOP   //>
 )
 
 func GetCode(c int) string {
@@ -21,6 +23,10 @@ func GetCode(c int) string {
 		return "MUL"
 	case ASSIGN:
 		return "ASSIGN"
+	case LTOP:
+		return "LTOP"
+	case GTOP:
+		return "GTOP"
 	}
 	return ""
 }

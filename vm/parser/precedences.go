@@ -19,8 +19,8 @@ const (
 var precedences = map[int]int{
 	// token.EQ:       EQUALS,
 	// token.NOT_EQ:   EQUALS,
-	// token.LT:       LESSGREATER,
-	// token.GT:       LESSGREATER,
+	token.LT:   LESSGREATER,
+	token.GT:   LESSGREATER,
 	token.PLUS: SUM,
 	// token.MINUS:    SUM,
 	// token.SLASH:    PRODUCT,
