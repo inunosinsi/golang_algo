@@ -17,7 +17,8 @@ func main() {
 	// echo a;`
 	// input := `var a = (1 + 2) * 3;
 	// echo a;`
-	input := `true`
+	input := `true
+false`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()

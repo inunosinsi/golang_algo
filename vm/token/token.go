@@ -29,12 +29,16 @@ const (
 	FNC
 	VAR //var
 	ECHO
+	TRUE
+	FALSE
 )
 
 var keywords = map[string]int{
 	"function": FNC,
 	"var":      VAR,
 	"echo":     ECHO,
+	"true":     TRUE,
+	"false":    FALSE,
 }
 
 func LookupIdent(ident string) int {

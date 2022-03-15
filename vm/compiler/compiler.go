@@ -86,6 +86,8 @@ func (c *Compiler) Compile(node ast.Node) error {
 		c.emit(code.POP)
 	case *ast.Identifier:
 		c.emit(code.PUSH, node.Value)
+	case *ast.Boolean:
+		c.emit(code.PUSH, node.Value)
 	}
 
 	return nil
