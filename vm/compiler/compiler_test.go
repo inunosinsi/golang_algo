@@ -102,6 +102,38 @@ ASSIGN a
 PUSH a
 POP`,
 		},
+		{
+			input:                    `true`,
+			expectedIntermediateCode: `PUSH 1`,
+		},
+		{
+			input:                    `false`,
+			expectedIntermediateCode: `PUSH 0`,
+		},
+		{
+			input: `(5 > 3)`,
+			expectedIntermediateCode: `PUSH 5
+PUSH 3
+GTOP`,
+		},
+		{
+			input: `(5 < 3)`,
+			expectedIntermediateCode: `PUSH 5
+PUSH 3
+LTOP`,
+		},
+		{
+			input: `(5 == 3)`,
+			expectedIntermediateCode: `PUSH 5
+PUSH 3
+EQOP`,
+		},
+		{
+			input: `(5 != 3)`,
+			expectedIntermediateCode: `PUSH 5
+PUSH 3
+NEOP`,
+		},
 	}
 
 	for _, tt := range tests {
