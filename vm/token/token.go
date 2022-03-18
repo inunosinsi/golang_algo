@@ -30,6 +30,8 @@ const (
 
 	LPAREN //(
 	RPAREN //)
+	LBRACE //{
+	RBRACE //}
 
 	//キーワード
 	FNC
