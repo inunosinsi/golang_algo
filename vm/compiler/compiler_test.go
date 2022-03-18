@@ -111,6 +111,16 @@ POP`,
 			expectedIntermediateCode: `PUSH 0`,
 		},
 		{
+			input: `!true`,
+			expectedIntermediateCode: `PUSH 1
+NOT`,
+		},
+		{
+			input: `!false`,
+			expectedIntermediateCode: `PUSH 0
+NOT`,
+		},
+		{
 			input: `(5 > 3)`,
 			expectedIntermediateCode: `PUSH 5
 PUSH 3

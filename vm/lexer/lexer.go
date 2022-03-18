@@ -26,6 +26,8 @@ func Divide(input string) []token.Token {
 			tok = newToken(token.ASSIGN, []byte("="))
 		case '+':
 			tok = newToken(token.PLUS, []byte("+"))
+		case '!':
+			tok = newToken(token.BANG, []byte("!"))
 		case '*':
 			tok = newToken(token.PLUS, []byte("*"))
 		case ';':
@@ -67,6 +69,8 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.ASSIGN, []byte{l.ch})
 	case '+':
 		tok = newToken(token.PLUS, []byte{l.ch})
+	case '!':
+		tok = newToken(token.BANG, []byte{l.ch})
 	case '*':
 		tok = newToken(token.ASTERISK, []byte{l.ch})
 	case '<':

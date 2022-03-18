@@ -18,6 +18,7 @@ const (
 	//演算子
 	ASSIGN   //=
 	PLUS     //+
+	BANG     //!
 	ASTERISK //*
 
 	LT //<

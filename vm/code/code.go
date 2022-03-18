@@ -5,6 +5,7 @@ const (
 	PUSH = iota
 	POP  //スタックのトップの値をポップし、出力する
 	ADD
+	NOT //!で真偽反転
 	MUL
 	ASSIGN //スタックのトップの値をポップし、指定の変数へ書き込む
 	LTOP   //<
@@ -19,6 +20,8 @@ func GetCode(c int) string {
 		return "POP"
 	case ADD:
 		return "ADD"
+	case NOT:
+		return "NOT"
 	case MUL:
 		return "MUL"
 	case ASSIGN:

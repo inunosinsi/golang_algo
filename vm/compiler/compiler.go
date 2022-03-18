@@ -1,6 +1,8 @@
 package compiler
 
 import (
+	"fmt"
+
 	"../ast"
 	"../code"
 )
@@ -71,6 +73,17 @@ func (c *Compiler) Compile(node ast.Node) error {
 		case ">":
 			c.emit(code.GTOP)
 			return nil
+		}
+	case *ast.PrefixExpression:
+		err := c.Compile(node.Right)
+		if err != nil {
+			return err
+		}
+		switch string(node.Operator) {
+		case "!":
+			c.emit(code.NOT)
+		default:
+			return fmt.Errorf("unknown operator %s", node.Operator)
 		}
 	case *ast.VarStatement:
 		err := c.Compile(node.Value)
