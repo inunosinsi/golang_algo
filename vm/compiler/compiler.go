@@ -79,6 +79,12 @@ func (c *Compiler) Compile(node ast.Node) error {
 		case ">":
 			c.emit(code.GTOP)
 			return nil
+		case "<=":
+			c.emit(code.LEOP)
+			return nil
+		case ">=":
+			c.emit(code.GEOP)
+			return nil
 		}
 	case *ast.PrefixExpression:
 		err := c.Compile(node.Right)

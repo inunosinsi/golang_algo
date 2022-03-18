@@ -12,6 +12,8 @@ const (
 	NEOP   //!=
 	LTOP   //<
 	GTOP   //>
+	LEOP   //<=
+	GEOP   //>=
 )
 
 func GetCode(c int) string {
@@ -36,6 +38,10 @@ func GetCode(c int) string {
 		return "LTOP"
 	case GTOP:
 		return "GTOP"
+	case LEOP:
+		return "LEOP"
+	case GEOP:
+		return "GEOP"
 	}
 	return ""
 }

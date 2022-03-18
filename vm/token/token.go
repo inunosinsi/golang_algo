@@ -23,6 +23,8 @@ const (
 
 	LT //<
 	GT //>
+	LE //<=
+	GE //>=
 
 	SEMICOLON //;
 
