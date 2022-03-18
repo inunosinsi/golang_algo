@@ -144,6 +144,18 @@ EQOP`,
 PUSH 3
 NEOP`,
 		},
+		{
+			input: `(5 >= 3)`,
+			expectedIntermediateCode: `PUSH 5
+PUSH 3
+GEOP`,
+		},
+		{
+			input: `(5 <= 3)`,
+			expectedIntermediateCode: `PUSH 5
+PUSH 3
+LEOP`,
+		},
 	}
 
 	for _, tt := range tests {

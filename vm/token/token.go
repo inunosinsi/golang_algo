@@ -35,6 +35,9 @@ const (
 	ECHO
 	TRUE
 	FALSE
+
+	EQ     //==
+	NOT_EQ //!=
 )
 
 var keywords = map[string]int{

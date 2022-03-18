@@ -17,11 +17,11 @@ const (
 
 // map[int]intの[int]はtoken.TokenTypeに対応
 var precedences = map[int]int{
-	// token.EQ:       EQUALS,
-	// token.NOT_EQ:   EQUALS,
-	token.LT:   LESSGREATER,
-	token.GT:   LESSGREATER,
-	token.PLUS: SUM,
+	token.EQ:     EQUALS,
+	token.NOT_EQ: EQUALS,
+	token.LT:     LESSGREATER,
+	token.GT:     LESSGREATER,
+	token.PLUS:   SUM,
 	// token.MINUS:    SUM,
 	// token.SLASH:    PRODUCT,
 	token.ASTERISK: PRODUCT,

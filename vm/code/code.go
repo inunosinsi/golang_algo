@@ -8,6 +8,8 @@ const (
 	NOT //!で真偽反転
 	MUL
 	ASSIGN //スタックのトップの値をポップし、指定の変数へ書き込む
+	EQOP   //==
+	NEOP   //!=
 	LTOP   //<
 	GTOP   //>
 )
@@ -26,6 +28,10 @@ func GetCode(c int) string {
 		return "MUL"
 	case ASSIGN:
 		return "ASSIGN"
+	case EQOP:
+		return "EQOP"
+	case NEOP:
+		return "NEOP"
 	case LTOP:
 		return "LTOP"
 	case GTOP:

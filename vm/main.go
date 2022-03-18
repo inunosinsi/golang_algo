@@ -10,8 +10,7 @@ import (
 )
 
 func main() {
-	input := `!true
-!false`
+	input := `(5 == 3)`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()

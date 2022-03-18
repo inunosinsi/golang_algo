@@ -67,6 +67,12 @@ func (c *Compiler) Compile(node ast.Node) error {
 		case "*":
 			c.emit(code.MUL)
 			return nil
+		case "==":
+			c.emit(code.EQOP)
+			return nil
+		case "!=":
+			c.emit(code.NEOP)
+			return nil
 		case "<":
 			c.emit(code.LTOP)
 			return nil
