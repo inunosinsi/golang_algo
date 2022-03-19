@@ -156,6 +156,15 @@ GEOP`,
 PUSH 3
 LEOP`,
 		},
+		{
+			input: `if (true) {
+	var a = 1;
+	a = a + 1;
+	echo a;
+}
+`,
+			expectedIntermediateCode: ``,
+		},
 	}
 
 	for _, tt := range tests {
