@@ -36,3 +36,7 @@ func (p *Parser) expectPeek(t int) bool {
 func (p *Parser) peekError(t int) {
 	//いずれエラーメッセージを出力したい
 }
+
+func (p *Parser) curTokenIs(t int) bool {
+	return p.curToken.TokenType == t
+}
