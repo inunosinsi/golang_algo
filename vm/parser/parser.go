@@ -9,6 +9,7 @@ import (
 type (
 	prefixParseFn func() ast.Expression
 	infixParseFn  func(ast.Expression) ast.Expression
+	blockParseFn  func() *ast.BlockStatement
 )
 
 type Parser struct {
@@ -21,6 +22,7 @@ type Parser struct {
 	//map[int]...のintにTokenTypeを指定する
 	prefixParseFns map[int]prefixParseFn
 	infixParseFns  map[int]infixParseFn
+	blockParseFns  map[int]blockParseFn
 }
 
 func New(l *lexer.Lexer) *Parser {
@@ -48,6 +50,10 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.GT, p.parseInfixExpression)
 	p.registerInfix(token.LE, p.parseInfixExpression)
 	p.registerInfix(token.GE, p.parseInfixExpression)
+
+	//検証用
+	p.blockParseFns = make(map[int]blockParseFn)
+	p.registerBlock(token.LBRACE, p.parseBlockStatement)
 
 	//処理 tokenを二回進めることで、curTokenに最初のトークン、peekTokenに２つ目のトークンが格納される
 	p.nextToken()
@@ -80,6 +86,10 @@ func (p *Parser) registerInfix(tokenType int, fn infixParseFn) {
 	p.infixParseFns[tokenType] = fn
 }
 
+func (p *Parser) registerBlock(tokenType int, fn blockParseFn) {
+	p.blockParseFns[tokenType] = fn
+}
+
 func (p *Parser) nextToken() {
 	p.curToken = p.peekToken
 	p.peekToken = p.l.NextToken()
@@ -93,6 +103,8 @@ func (p *Parser) parseStatement() ast.Statement {
 		return p.parseEchoStatement()
 	case token.IDENT:
 		return p.parseIdentStatement()
+	case token.LBRACE: //{}の検証用
+		return p.parseBlockStatement()
 	default:
 		return p.parseExpressionStatement()
 	}

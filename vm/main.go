@@ -10,7 +10,11 @@ import (
 )
 
 func main() {
-	input := `(5 <= 3)`
+	input := `{
+var a = 1;
+a = a + 1;
+echo a;		
+}`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()
