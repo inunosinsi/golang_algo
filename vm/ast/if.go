@@ -25,6 +25,7 @@ func (ie *IfExpression) String() string {
 	var out bytes.Buffer
 
 	out.WriteString("if")
+	out.WriteString(" ")
 	out.WriteString(ie.Condition.String())
 	out.WriteString(" ")
 	out.WriteString(ie.Consequence.String())
