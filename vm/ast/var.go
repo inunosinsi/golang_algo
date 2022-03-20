@@ -1,5 +1,8 @@
 package ast
 
+/**
+ * var a = 1;のようにvarから始まる文
+ */
 import (
 	"bytes"
 

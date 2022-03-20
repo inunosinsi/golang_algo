@@ -163,7 +163,11 @@ LEOP`,
 	echo a;
 }
 `,
-			expectedIntermediateCode: ``,
+			expectedIntermediateCode: `PUSH 1
+FJUMP L1
+PUSH 1
+POP
+L1:`,
 		},
 	}
 

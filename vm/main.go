@@ -10,10 +10,8 @@ import (
 )
 
 func main() {
-	input := `{
-var a = 1;
-a = a + 1;
-echo a;		
+	input := `if(true){
+echo 1;
 }`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む

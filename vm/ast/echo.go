@@ -1,5 +1,8 @@
 package ast
 
+/**
+ * echo 1;のecho
+ */
 import (
 	"bytes"
 

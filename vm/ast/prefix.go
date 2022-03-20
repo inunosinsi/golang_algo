@@ -1,5 +1,8 @@
 package ast
 
+/**
+ * !trueや-1の!や-の何らかの値の前に付与する符号
+ */
 import (
 	"bytes"
 

@@ -1,5 +1,8 @@
 package ast
 
+/**
+ * {}で囲まれた箇所
+ */
 import (
 	"bytes"
 
