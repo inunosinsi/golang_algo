@@ -10,9 +10,16 @@ import (
 )
 
 func main() {
-	input := `if(true){
-echo 1;
-}`
+	input := `var a = 1;
+if(a > 0){
+a = a + 1;
+}
+var b = 0;
+if(b < 1){
+b = b + a;
+}
+echo a;
+echo b;`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()
@@ -26,7 +33,11 @@ echo 1;
 	// 中間コードを出力する
 	if len(c.Opcodes) > 0 {
 		for _, opcode := range c.Opcodes {
-			fmt.Printf("%s %s\n", code.GetCode(opcode.Mnemonic), string(opcode.Operand))
+			if opcode.Mnemonic == code.LABEL {
+				fmt.Printf("%s\n", string(opcode.Operand))
+			} else {
+				fmt.Printf("%s %s\n", code.GetCode(opcode.Mnemonic), string(opcode.Operand))
+			}
 		}
 	}
 

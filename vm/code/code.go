@@ -14,6 +14,9 @@ const (
 	GTOP   //>
 	LEOP   //<=
 	GEOP   //>=
+	LABEL  //JUMP用の空文字
+	JUMP
+	FJUMP
 )
 
 func GetCode(c int) string {
@@ -42,6 +45,12 @@ func GetCode(c int) string {
 		return "LEOP"
 	case GEOP:
 		return "GEOP"
+	case LABEL:
+		return ""
+	case JUMP:
+		return "JUMP"
+	case FJUMP:
+		return "FJUMP"
 	}
 	return ""
 }

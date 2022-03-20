@@ -158,16 +158,71 @@ LEOP`,
 		},
 		{
 			input: `if (true) {
-	var a = 1;
-	a = a + 1;
-	echo a;
-}
-`,
+	echo 1;
+}`,
 			expectedIntermediateCode: `PUSH 1
 FJUMP L1
 PUSH 1
 POP
 L1:`,
+		},
+		{
+			input: `var a = 1;
+if(a > 0){
+	a = a + 1;
+	echo a;
+}`,
+			expectedIntermediateCode: `PUSH 1
+ASSIGN a
+PUSH a
+PUSH 0
+GTOP
+FJUMP L1
+PUSH a
+PUSH 1
+ADD
+ASSIGN a
+PUSH a
+POP
+L1:`,
+		},
+		{
+			input: `var a = 1;
+if(a > 0){
+	a = a + 1;
+}
+var b = 0;
+if(b < 1){
+	b = b + a;
+}
+echo a;
+echo b;`,
+			expectedIntermediateCode: `PUSH 1
+ASSIGN a
+PUSH a
+PUSH 0
+GTOP
+FJUMP L1
+PUSH a
+PUSH 1
+ADD
+ASSIGN a
+L1:
+PUSH 0
+ASSIGN b
+PUSH b
+PUSH 1
+LTOP
+FJUMP L2
+PUSH b
+PUSH a
+ADD
+ASSIGN b
+L2:
+PUSH a
+POP
+PUSH b
+POP`,
 		},
 	}
 
@@ -192,9 +247,14 @@ func generate(ipt string) string {
 	lines := ""
 	if len(c.Opcodes) > 0 {
 		for _, opcode := range c.Opcodes {
-			m := code.GetCode(opcode.Mnemonic)
-			o := string(opcode.Operand)
-			lines += trimString(m+" "+o) + "\n"
+			if opcode.Mnemonic == code.LABEL {
+				o := string(opcode.Operand)
+				lines += trimString(o) + "\n"
+			} else {
+				m := code.GetCode(opcode.Mnemonic)
+				o := string(opcode.Operand)
+				lines += trimString(m+" "+o) + "\n"
+			}
 		}
 	}
 	return trimString(lines)
