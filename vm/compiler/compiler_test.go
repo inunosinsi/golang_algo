@@ -224,6 +224,22 @@ POP
 PUSH b
 POP`,
 		},
+		{
+			input: `if (true) {
+	echo 1;
+} else {
+	echo 0;
+}`,
+			expectedIntermediateCode: `PUSH 1
+FJUMP L1
+PUSH 1
+POP
+JUMP L2
+L1:
+PUSH 0
+POP
+L2:`,
+		},
 	}
 
 	for _, tt := range tests {

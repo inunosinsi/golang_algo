@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"fmt"
+	"strconv"
 
 	"../ast"
 	"../code"
@@ -31,6 +32,9 @@ type Compiler struct {
 func New() *Compiler {
 	return &Compiler{}
 }
+
+// jumpのラベル用
+var labelIndex = 1
 
 //再帰でProgram → ExpressionStatement → Expressionの順で掘り下げていく
 func (c *Compiler) Compile(node ast.Node) error {
@@ -97,6 +101,21 @@ func (c *Compiler) Compile(node ast.Node) error {
 		default:
 			return fmt.Errorf("unknown operator %s", node.Operator)
 		}
+	case *ast.IfExpression:
+		err := c.Compile(node.Condition)
+		if err != nil {
+			return err
+		}
+		fjumpIndexStr := strconv.Itoa(labelIndex)
+		labelIndex += 1
+		c.emit(code.FJUMP, []byte("L"+fjumpIndexStr))
+
+		err = c.Compile(node.Consequence)
+		if err != nil {
+			return err
+		}
+
+		c.emit(code.LABEL, []byte("L"+fjumpIndexStr+":"))
 	case *ast.VarStatement:
 		err := c.Compile(node.Value)
 		if err != nil {
