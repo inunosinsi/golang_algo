@@ -39,7 +39,8 @@ const (
 	ECHO
 	TRUE
 	FALSE
-	IF //if
+	IF   //if
+	ELSE //else
 
 	EQ     //==
 	NOT_EQ //!=
@@ -52,6 +53,7 @@ var keywords = map[string]int{
 	"true":     TRUE,
 	"false":    FALSE,
 	"if":       IF,
+	"else":     ELSE,
 }
 
 func LookupIdent(ident string) int {
