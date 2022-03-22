@@ -10,16 +10,11 @@ import (
 )
 
 func main() {
-	input := `var a = 1;
-if(a > 0){
-a = a + 1;
-}
-var b = 0;
-if(b < 1){
-b = b + a;
-}
-echo a;
-echo b;`
+	input := `if(true){
+	echo 1;
+} else {
+	echo 0;
+}`
 	l := lexer.New(input)
 	p := parser.New(l) //lexerをparserの中に組み込む
 	program := p.Parse()

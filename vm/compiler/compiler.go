@@ -106,7 +106,6 @@ func (c *Compiler) Compile(node ast.Node) error {
 			return err
 		}
 		fjumpIndexStr := strconv.Itoa(c.labelIndex)
-		fmt.Println(fjumpIndexStr)
 		c.labelIndex += 1
 		c.emit(code.FJUMP, []byte("L"+fjumpIndexStr))
 
@@ -115,7 +114,20 @@ func (c *Compiler) Compile(node ast.Node) error {
 			return err
 		}
 
-		c.emit(code.LABEL, []byte("L"+fjumpIndexStr+":"))
+		if node.Alternative == nil { //elseがない場合
+			c.emit(code.LABEL, []byte("L"+fjumpIndexStr+":"))
+		} else { // elseがある場合
+			jumpIndexStr := strconv.Itoa(c.labelIndex)
+			c.labelIndex += 1
+			c.emit(code.JUMP, []byte("L"+jumpIndexStr))
+
+			c.emit(code.LABEL, []byte("L"+fjumpIndexStr+":"))
+			err := c.Compile(node.Alternative)
+			if err != nil {
+				return err
+			}
+			c.emit(code.LABEL, []byte("L"+jumpIndexStr+":"))
+		}
 	case *ast.VarStatement:
 		err := c.Compile(node.Value)
 		if err != nil {
