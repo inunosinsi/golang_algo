@@ -26,18 +26,17 @@ type Opcode struct {
 }
 
 type Compiler struct {
-	Opcodes []Opcode
+	Opcodes    []Opcode
+	labelIndex int //JUMPのLn:(nには整数が入る)用の値
 }
 
 func New() *Compiler {
-	return &Compiler{}
+	return &Compiler{labelIndex: 1}
 }
-
-// jumpのラベル用
-var labelIndex = 1
 
 //再帰でProgram → ExpressionStatement → Expressionの順で掘り下げていく
 func (c *Compiler) Compile(node ast.Node) error {
+
 	switch node := node.(type) {
 	case *ast.Program:
 		for _, s := range node.Statements {
@@ -106,8 +105,9 @@ func (c *Compiler) Compile(node ast.Node) error {
 		if err != nil {
 			return err
 		}
-		fjumpIndexStr := strconv.Itoa(labelIndex)
-		labelIndex += 1
+		fjumpIndexStr := strconv.Itoa(c.labelIndex)
+		fmt.Println(fjumpIndexStr)
+		c.labelIndex += 1
 		c.emit(code.FJUMP, []byte("L"+fjumpIndexStr))
 
 		err = c.Compile(node.Consequence)
