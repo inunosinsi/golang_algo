@@ -240,6 +240,28 @@ PUSH 0
 POP
 L2:`,
 		},
+		{
+			input: `var a = 0;
+while(a < 10){
+	a = a + 1;
+	echo a;
+}`,
+			expectedIntermediateCode: `PUSH 0
+ASSIGN a
+L1:
+PUSH a
+PUSH 10
+LTOP
+FJUMP L2
+PUSH a
+PUSH 1
+ADD
+ASSIGN a
+PUSH a
+POP
+JUMP L1
+L2:`,
+		},
 	}
 
 	for _, tt := range tests {

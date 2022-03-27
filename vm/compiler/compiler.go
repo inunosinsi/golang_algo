@@ -128,6 +128,26 @@ func (c *Compiler) Compile(node ast.Node) error {
 			}
 			c.emit(code.LABEL, []byte("L"+jumpIndexStr+":"))
 		}
+	case *ast.WhileExpression:
+		jumpIndexStr := strconv.Itoa(c.labelIndex)
+		c.labelIndex += 1
+		c.emit(code.LABEL, []byte("L"+jumpIndexStr+":"))
+
+		err := c.Compile(node.Condition)
+		if err != nil {
+			return err
+		}
+
+		fjumpIndexStr := strconv.Itoa(c.labelIndex)
+		c.labelIndex += 1
+		c.emit(code.FJUMP, []byte("L"+fjumpIndexStr))
+
+		err = c.Compile(node.Statements)
+		if err != nil {
+			return err
+		}
+		c.emit(code.JUMP, []byte("L"+jumpIndexStr))
+		c.emit(code.LABEL, []byte("L"+fjumpIndexStr+":"))
 	case *ast.VarStatement:
 		err := c.Compile(node.Value)
 		if err != nil {
