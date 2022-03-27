@@ -42,6 +42,8 @@ const (
 	IF   //if
 	ELSE //else
 
+	WHILE //while
+
 	EQ     //==
 	NOT_EQ //!=
 )
@@ -54,6 +56,7 @@ var keywords = map[string]int{
 	"false":    FALSE,
 	"if":       IF,
 	"else":     ELSE,
+	"while":    WHILE,
 }
 
 func LookupIdent(ident string) int {
