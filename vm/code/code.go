@@ -15,6 +15,9 @@ const (
 	LEOP   //<=
 	GEOP   //>=
 	LABEL  //JUMP用の空文字
+	FUNC   //function用の空文字
+	CALL   //関数呼び出し
+	RETURN //return
 	JUMP
 	FJUMP
 )
@@ -47,6 +50,12 @@ func GetCode(c int) string {
 		return "GEOP"
 	case LABEL:
 		return ""
+	case FUNC:
+		return ""
+	case CALL:
+		return "CALL"
+	case RETURN:
+		return "RETURN"
 	case JUMP:
 		return "JUMP"
 	case FJUMP:
