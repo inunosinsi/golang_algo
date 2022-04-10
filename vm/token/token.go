@@ -26,6 +26,7 @@ const (
 	LE //<=
 	GE //>=
 
+	COMMA     //,
 	SEMICOLON //;
 
 	LPAREN //(
@@ -34,13 +35,14 @@ const (
 	RBRACE //}
 
 	//キーワード
-	FNC
 	VAR //var
 	ECHO
 	TRUE
 	FALSE
 	IF   //if
 	ELSE //else
+	FUNC
+	RETURN
 
 	WHILE //while
 
@@ -49,7 +51,7 @@ const (
 )
 
 var keywords = map[string]int{
-	"function": FNC,
+	"function": FUNC,
 	"var":      VAR,
 	"echo":     ECHO,
 	"true":     TRUE,
@@ -57,6 +59,7 @@ var keywords = map[string]int{
 	"if":       IF,
 	"else":     ELSE,
 	"while":    WHILE,
+	"return":   RETURN,
 }
 
 func LookupIdent(ident string) int {
