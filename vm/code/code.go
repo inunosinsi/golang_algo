@@ -17,7 +17,7 @@ const (
 	LABEL  //JUMP用の空文字
 	FUNC   //function用の空文字
 	CALL   //関数呼び出し
-	RETURN //return
+	RETURN //関数の終了
 	JUMP
 	FJUMP
 )
