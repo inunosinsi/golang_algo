@@ -52,6 +52,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.GT, p.parseInfixExpression)
 	p.registerInfix(token.LE, p.parseInfixExpression)
 	p.registerInfix(token.GE, p.parseInfixExpression)
+	p.registerInfix(token.LPAREN, p.parseCallExpression)
 
 	//検証用
 	p.blockParseFns = make(map[int]blockParseFn)
@@ -101,6 +102,10 @@ func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.TokenType {
 	case token.VAR:
 		return p.parseVarStatement()
+	case token.FUNC:
+		return p.parseFunctionStatement()
+	case token.RETURN:
+		return p.parseReturnStatement()
 	case token.ECHO:
 		return p.parseEchoStatement()
 	case token.IDENT:
