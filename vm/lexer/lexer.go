@@ -103,6 +103,8 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.LPAREN, []byte{l.ch})
 	case ')':
 		tok = newToken(token.RPAREN, []byte{l.ch})
+	case ',':
+		tok = newToken(token.COMMA, []byte{l.ch})
 	case '{':
 		tok = newToken(token.LBRACE, []byte{l.ch})
 	case '}':
