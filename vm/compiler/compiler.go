@@ -173,6 +173,48 @@ func (c *Compiler) Compile(node ast.Node) error {
 			return err
 		}
 		c.emit(code.POP)
+	case *ast.FunctionStatement:
+		c.emit(code.FUNC, node.Name)
+
+		//関数の定義に記載のあるパラメータ分だけ値をASSIGNする
+		paramLen := len(node.Parameters)
+		if paramLen > 0 {
+			// 逆順にする
+			for i := paramLen - 1; i >= 0; i-- {
+				c.emit(code.PUSH, []byte("ARGS"))
+				c.emit(code.ASSIGN, node.Parameters[i].Value)
+			}
+		}
+
+		err := c.Compile(node.Body)
+		if err != nil {
+			return err
+		}
+	case *ast.CallExpression:
+		//関数の定義に記載のある引数分だけ値をPUSHする
+		// argLen := len(node.Arguments)
+		// if arglen > 0 {
+		argLen := len(node.Arguments)
+		if argLen > 0 {
+			for _, a := range node.Arguments {
+				c.emit(code.PUSH, []byte(a.String()))
+				c.emit(code.ARGS)
+			}
+		}
+
+		//}
+		c.emit(code.CALL, []byte(node.Function.String()))
+
+		if argLen > 0 {
+			c.emit(code.PUSH, []byte("ARGS"))
+		}
+	case *ast.ReturnStatement:
+		if node.ReturnValue != nil {
+			c.emit(code.PUSH, []byte(node.ReturnValue.String()))
+			c.emit(code.ARGS)
+		}
+		c.emit(code.RETURN)
+		c.emit(code.FUNC) //空文字
 	case *ast.Identifier:
 		c.emit(code.PUSH, node.Value)
 	case *ast.Boolean:

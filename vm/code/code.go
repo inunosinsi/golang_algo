@@ -16,6 +16,7 @@ const (
 	GEOP   //>=
 	LABEL  //JUMP用の空文字
 	FUNC   //function用の空文字
+	ARGS   //関数呼び出し時にパラメータを登録
 	CALL   //関数呼び出し
 	RETURN //関数の終了
 	JUMP
@@ -52,6 +53,8 @@ func GetCode(c int) string {
 		return ""
 	case FUNC:
 		return ""
+	case ARGS:
+		return "ARGS"
 	case CALL:
 		return "CALL"
 	case RETURN:
