@@ -28,7 +28,7 @@ var precedences = map[int]int{
 	// token.SLASH:    PRODUCT,
 	token.ASTERISK: PRODUCT,
 	token.LPAREN:   CALL,
-	// token.LBRACKET: INDEX,
+	token.LBRACKET: INDEX,
 }
 
 /** 優先順位 **/
