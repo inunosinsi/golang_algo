@@ -149,11 +149,28 @@ func (c *Compiler) Compile(node ast.Node) error {
 		c.emit(code.JUMP, []byte("L"+jumpIndexStr))
 		c.emit(code.LABEL, []byte("L"+fjumpIndexStr+":"))
 	case *ast.VarStatement:
-		err := c.Compile(node.Value)
-		if err != nil {
-			return err
+		switch node.Value.(type) {
+		case *ast.ArrayLiteral:
+			/** ここのコードはイケてない **/
+
+			id := node.Name.Value
+			ln := len(node.Value.(*ast.ArrayLiteral).Elements)
+			idxStr := "[" + strconv.Itoa(ln) + "]"
+			idxByte := []byte(idxStr)
+			id = append(id, idxByte...)
+			c.emit(code.CONST, id)
+			err := c.Compile(node.Value)
+			if err != nil {
+				return err
+			}
+		default:
+			err := c.Compile(node.Value)
+			if err != nil {
+				return err
+			}
+			c.emit(code.ASSIGN, node.Name.Value)
 		}
-		c.emit(code.ASSIGN, node.Name.Value)
+
 	case *ast.BlockStatement:
 		for _, s := range node.Statements {
 			err := c.Compile(s)

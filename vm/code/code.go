@@ -21,6 +21,7 @@ const (
 	RETURN //関数の終了
 	JUMP
 	FJUMP
+	CONST //配列の定義
 )
 
 func GetCode(c int) string {
@@ -63,6 +64,8 @@ func GetCode(c int) string {
 		return "JUMP"
 	case FJUMP:
 		return "FJUMP"
+	case CONST:
+		return "CONST"
 	}
 	return ""
 }

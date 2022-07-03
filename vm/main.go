@@ -3,8 +3,11 @@ package main
 import (
 	"fmt"
 
+	"./code"
+	"./compiler"
 	"./lexer"
 	"./parser"
+	"./vm"
 )
 
 func main() {
@@ -35,20 +38,20 @@ echo arr[1];`
 	//抽象構文木が正しくできれば出力される
 	fmt.Println(program.String())
 
-	// c := compiler.New()
-	// _ = c.Compile(program) //エラーを拾う事を無しにする
+	c := compiler.New()
+	_ = c.Compile(program) //エラーを拾う事を無しにする
 
-	// // 中間コードを出力する
-	// if len(c.Opcodes) > 0 {
-	// 	for _, opcode := range c.Opcodes {
-	// 		if opcode.Mnemonic == code.LABEL || opcode.Mnemonic == code.FUNC {
-	// 			fmt.Printf("%s\n", string(opcode.Operand))
-	// 		} else {
-	// 			fmt.Printf("%s %s\n", code.GetCode(opcode.Mnemonic), string(opcode.Operand))
-	// 		}
-	// 	}
-	// }
+	// 中間コードを出力する
+	if len(c.Opcodes) > 0 {
+		for _, opcode := range c.Opcodes {
+			if opcode.Mnemonic == code.LABEL || opcode.Mnemonic == code.FUNC {
+				fmt.Printf("%s\n", string(opcode.Operand))
+			} else {
+				fmt.Printf("%s %s\n", code.GetCode(opcode.Mnemonic), string(opcode.Operand))
+			}
+		}
+	}
 
-	// result := vm.Eval(c.Opcodes)
-	// fmt.Println(result)
+	result := vm.Eval(c.Opcodes)
+	fmt.Println(result)
 }
